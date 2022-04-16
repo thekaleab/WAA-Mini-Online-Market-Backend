@@ -11,13 +11,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/items")
 public class ItemController {
-<<<<<<< HEAD
 
-
-=======
     @Autowired
     ItemService itemService;
->>>>>>> dev
+
     @PostMapping
     public void addItem(@RequestBody Item item){
         itemService.saveItem(item);
