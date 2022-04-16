@@ -1,32 +1,37 @@
 package com.example.waaonlineminimarketbackend.controller;
 
 import com.example.waaonlineminimarketbackend.entity.Address;
+import com.example.waaonlineminimarketbackend.service.AddressService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/addres")
+@RequestMapping(name = "/address")
 public class AddressController {
 
+     @Autowired
+    AddressService addressService;
+
     @PostMapping
-    public void addAddress(Address address){
+    public void addAddress(@RequestBody Address address){
 
     }
     @GetMapping
     public List<Address> getAllAddress(){
-        return null;
+        return addressService.getAllAddress();
     }
     @GetMapping("/{id}")
-    public Address getAddressById(long id){
-        return null;
+    public Address getAddressById(@PathVariable long id){
+        return addressService.getAddressById(id);
     }
     @PutMapping("/{id}")
-    public void updateAddressById(long id, Address address){
-
+    public void updateAddressById(@PathVariable long id, @RequestBody Address address){
+       addressService.UpdateAddressById(id,address);
     }
     @DeleteMapping("/{id}")
-    public void deleteAddressById(long id){
-
+    public void deleteAddressById(@PathVariable long id){
+      addressService.deleteAddressById(id);
     }
 }
