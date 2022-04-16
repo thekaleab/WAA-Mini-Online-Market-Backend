@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/orders")
 public class OrderController {
     @PostMapping
     public void addOrder(Order order){

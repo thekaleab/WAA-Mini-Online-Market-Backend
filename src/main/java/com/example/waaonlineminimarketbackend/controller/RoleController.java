@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/roles")
 public class RoleController {
     @PostMapping
     public void addRole(Role role){
