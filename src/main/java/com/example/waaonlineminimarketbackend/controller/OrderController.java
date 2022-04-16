@@ -17,15 +17,15 @@ public class OrderController {
     public List<Order> getAllOrder(){
         return null;
     }
-    @GetMapping
+    @GetMapping("/{id}")
     public Address getOrderById(long id){
         return null;
     }
-    @PutMapping
+    @PutMapping("/{id}")
     public void updateOrderById(long id, Order order){
 
     }
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteOrderById(long id){
 
     }

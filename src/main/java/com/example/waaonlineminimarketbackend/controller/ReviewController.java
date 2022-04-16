@@ -17,15 +17,15 @@ public class ReviewController {
     public List<Review> getAllReview(){
         return null;
     }
-    @GetMapping
+    @GetMapping("/{id}")
     public Address getReviewById(long id){
         return null;
     }
-    @PutMapping
+    @PutMapping("/{id}")
     public void updateReviewById(long id, Review review){
 
     }
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteReviewById(long id){
 
     }

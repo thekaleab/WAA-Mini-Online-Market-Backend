@@ -17,15 +17,15 @@ public class RoleController {
     public List<Role> getAllRole(){
         return null;
     }
-    @GetMapping
+    @GetMapping("/{id}")
     public Address getRoleById(long id){
         return null;
     }
-    @PutMapping
+    @PutMapping("/{id}")
     public void updateRoleById(long id, Role role){
 
     }
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteRoleById(long id){
 
     }
