@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/items")
 public class ItemController {
     @PostMapping
     public void addItem(Item item){

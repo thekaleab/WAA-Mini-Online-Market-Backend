@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/reviews")
 public class ReviewController {
     @PostMapping
     public void addReview(Review review){

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/order-status")
 public class OrderStatusController {
     @PostMapping
     public void addOrderStatus(OrderStatus orderStatus){
