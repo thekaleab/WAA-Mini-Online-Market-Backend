@@ -12,31 +12,31 @@ import java.util.List;
 public class ItemServiceImpl implements ItemService {
 
     @Autowired
-    ItemRepository itemService;
+    ItemRepository itemRepository;
 
     @Override
     public void saveItem(Item item) {
-    itemService.save(item);
+        itemRepository.save(item);
     }
 
     @Override
     public List<Item> getAllItem() {
-        return itemService.findAll();
+        return itemRepository.findAll();
     }
 
     @Override
     public Item getItemById(long id) {
-        return itemService.getById(id);
+        return itemRepository.getById(id);
     }
 
     @Override
     public void deleteItemById(long id) {
-        itemService.deleteById(id);
+        itemRepository.deleteById(id);
     }
 
     @Override
     public void UpdateItemById(long id, Item i) {
-        var item = itemService.getById(id);
+        var item = itemRepository.getById(id);
         item.setItemId(i.getItemId());
         item.setName(i.getName());
         item.setPrice(i.getPrice());
