@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(("/address"))
+@RequestMapping(name = "/addres")
 public class AddressController {
 
     @PostMapping
@@ -17,15 +17,15 @@ public class AddressController {
     public List<Address> getAllAddress(){
         return null;
     }
-    @GetMapping
+    @GetMapping("/{id}")
     public Address getAddressById(long id){
         return null;
     }
-    @PutMapping
+    @PutMapping("/{id}")
     public void updateAddressById(long id, Address address){
 
     }
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteAddressById(long id){
 
     }

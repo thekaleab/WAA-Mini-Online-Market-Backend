@@ -18,15 +18,15 @@ public class OrderStatusController {
     public List<OrderStatus> getOrderStatus(){
         return null;
     }
-    @GetMapping
+    @GetMapping("/{id}")
     public OrderStatus getAddressById(long id){
         return null;
     }
-    @PutMapping
+    @PutMapping("/{id}")
     public void updateOrderStatusById(long id, OrderStatus orderStatus){
 
     }
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteOrderStatusById(long id){
 
     }

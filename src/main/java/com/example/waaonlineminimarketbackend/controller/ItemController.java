@@ -17,15 +17,15 @@ public class ItemController {
     public List<Item> getAllItem(){
         return null;
     }
-    @GetMapping
+    @GetMapping("/{id}")
     public Item getItmeById(long id){
         return null;
     }
-    @PutMapping
+    @PutMapping("/{id}")
     public void updateItemById(long id, Item item){
 
     }
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteItemById(long id){
 
     }

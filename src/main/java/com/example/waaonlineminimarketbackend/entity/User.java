@@ -17,6 +17,8 @@ public class User {
     private long userId;
     private String firstName;
     private String lastName;
+    private String password;
+    private String email;
 
     @ManyToMany
     private List<Role> roleList;
