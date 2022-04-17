@@ -23,13 +23,13 @@ public class RegistrationController {
 //    }
 
 
-    @PostMapping
+    @PostMapping("/seller")
     public void registerSeller(@RequestBody Seller seller) {
         sellerService.saveSeller(seller);
     }
 
 
-    @PostMapping
+    @PostMapping("/buyer")
     public void registerBuyer(@RequestBody Buyer buyer) {
         buyerService.saveBuyer(buyer);
     }
