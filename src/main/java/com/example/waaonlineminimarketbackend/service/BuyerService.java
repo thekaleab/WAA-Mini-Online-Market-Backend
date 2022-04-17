@@ -5,6 +5,7 @@ import com.example.waaonlineminimarketbackend.entity.Buyer;
 import java.util.List;
 
 public interface BuyerService {
+    
     void saveBuyer(Buyer buyer);
     List<Buyer> getBuyer();
     Buyer getBuyerById(long id);
