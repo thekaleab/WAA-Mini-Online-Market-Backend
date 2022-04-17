@@ -1,5 +1,6 @@
 package com.example.waaonlineminimarketbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,13 +16,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
-    private String firstName;
-    private String lastName;
+
     private String password;
     private String email;
 
-    @ManyToMany
-    private List<Role> roleList;
+    private String role;
 
     @OneToOne()
     private Address address;

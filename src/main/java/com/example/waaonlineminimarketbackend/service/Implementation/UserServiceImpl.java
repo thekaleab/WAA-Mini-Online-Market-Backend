@@ -2,6 +2,7 @@ package com.example.waaonlineminimarketbackend.service.Implementation;
 
 import com.example.waaonlineminimarketbackend.entity.User;
 import com.example.waaonlineminimarketbackend.entity.dto.input.UserInputDto;
+import com.example.waaonlineminimarketbackend.entity.dto.output.UserOutputDto;
 import com.example.waaonlineminimarketbackend.repository.UserRepository;
 import com.example.waaonlineminimarketbackend.service.UserService;
 import com.example.waaonlineminimarketbackend.util.ListMapper;
@@ -9,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -16,6 +18,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     ModelMapper modelMapper;
+
+
 
     @Autowired
     private UserRepository userRepository;
@@ -25,20 +29,26 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void saveUser(UserInputDto user) {
-        var x = modelMapper.map(user, User.class);
-        userRepository.save(x);
+    public void saveUser(User user) {
+//        if(user.getRole().equals())
+        userRepository.save(user);
 
     }
 
     @Override
-    public List<UserInputDto> getAllUser() {
-        return (List<UserInputDto>) listMapper.mapList(userRepository.findAll(), new UserInputDto());
+    public List<UserOutputDto> getAllUser() {
+        System.out.println("Inside");
+        System.out.println(listMapper.mapList(userRepository.findAll(), new UserInputDto()));
+
+//        System.out.println(userRepository.findAll());
+//        return  (userRepository.findAll());
+        return null;
     }
 
     @Override
-    public User getUserById(long id) {
-        return userRepository.findById(id).orElse(null);
+    public UserOutputDto getUserById(long id) {
+//        return userRepository.findById(id).orElse(null);
+        return null;
     }
 
     @Override
