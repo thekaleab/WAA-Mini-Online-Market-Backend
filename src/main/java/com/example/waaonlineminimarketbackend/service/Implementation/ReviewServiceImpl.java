@@ -37,8 +37,8 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void UpdateReviewById(long id, Review rv) {
         var review = reviewRepository.getById(id);
-        review.setReviewId(rv.getReviewId());
-        review.setName(rv.getName());
+//        review.setReviewId(rv.getReviewId());
+//        review.setName(rv.getName());
 
     }
 }

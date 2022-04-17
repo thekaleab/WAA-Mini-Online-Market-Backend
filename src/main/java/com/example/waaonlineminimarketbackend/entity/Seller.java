@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class Seller {
     @Id
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -22,6 +24,7 @@ public class Seller {
 
 
     private String lastname;
+
 
     private String email; // somebody@email.com
 
@@ -33,7 +36,9 @@ public class Seller {
     @Transient
     private String role = "SELLER";
 
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinTable(name = "buyer_seller_follow")
-//    private Set<Buyer> followers = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "buyer_seller_follow")
+    private Set<Buyer> followers = new HashSet<>();
+    @OneToMany(mappedBy = "seller")
+    private List<Item> productList;
 }

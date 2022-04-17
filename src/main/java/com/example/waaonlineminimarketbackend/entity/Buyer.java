@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -14,28 +16,38 @@ import java.util.List;
 
 public class Buyer {
     @Id
-
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String firstname;
+
+    @Column(nullable = false)
+
     private String lastname;
+
+    @Column(unique = true, nullable = false)
+
     private String email;
+
+    @Column(nullable = false)
+    @Transient
+
     private String password;
+
+    @OneToOne()
+    private Address address;
+
     private final String role = "BUYER";
 
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "followers")
-//    private Set<Seller> followingSellers = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "followers")
+    private Set<Seller> followingSellers = new HashSet<>();
 
-//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "buyer_id")
-//    @Fetch(FetchMode.JOIN)
-//    private List<Address> addresses;
 
-//    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    private ShoppingCart shoppingCart;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private ShoppingCart shoppingCart;
 
     private Integer points;
-    @OneToMany
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "buyer")
-    private List<Review> reviews;
+
 }

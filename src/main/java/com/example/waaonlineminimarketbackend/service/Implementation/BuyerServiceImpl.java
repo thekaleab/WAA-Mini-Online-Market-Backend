@@ -36,7 +36,7 @@ public class BuyerServiceImpl implements BuyerService {
         buyers.setLastname(buyer.getLastname());
         buyers.setPassword(buyer.getPassword());
         buyers.setPoints(buyer.getPoints());
-        buyers. setReviews(buyer.getReviews());
+//        buyers. setReviews(buyer.getReviews());
 
     }
 }

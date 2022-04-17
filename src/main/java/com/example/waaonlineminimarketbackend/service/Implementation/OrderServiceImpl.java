@@ -38,10 +38,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void UpdateOrderById(long id, Order o) {
         var order = orderRepository.getById(id);
-        order.setOrderId(o.getOrderId());
-        order.setOrderDate(o.getOrderDate());
-        order.setOrderStatus(o.getOrderStatus());
-        order.setOrderTime(o.getOrderTime());
+//        order.setOrderId(o.getOrderId());
+//        order.setOrderDate(o.getOrderDate());
+//        order.setOrderStatus(o.getOrderStatus());
+//        order.setOrderTime(o.getOrderTime());
         order.setItemList(o.getItemList());
     }
 }

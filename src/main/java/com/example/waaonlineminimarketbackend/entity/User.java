@@ -15,18 +15,11 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long userId;
+    private Long id;
 
-    private String password;
+    @Column(unique = true)
     private String email;
-
+    private String password;
     private String role;
-
-    @OneToOne()
-    private Address address;
-
-    @OneToMany
-    @JoinColumn(name = "user_id")
-    private List<Order> orderList;
 
 }

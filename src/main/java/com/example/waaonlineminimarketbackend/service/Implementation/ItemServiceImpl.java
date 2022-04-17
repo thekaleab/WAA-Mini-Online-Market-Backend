@@ -37,11 +37,11 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void UpdateItemById(long id, Item i) {
         var item = itemRepository.getById(id);
-        item.setItemId(i.getItemId());
-        item.setName(i.getName());
-        item.setPrice(i.getPrice());
-        item.setQuantity(i.getQuantity());
-        item.setReviewList(i.getReviewList());
+//        item.setItemId(i.getItemId());
+//        item.setName(i.getName());
+//        item.setPrice(i.getPrice());
+//        item.setQuantity(i.getQuantity());
+//        item.setReviewList(i.getReviewList());
     }
 
 }

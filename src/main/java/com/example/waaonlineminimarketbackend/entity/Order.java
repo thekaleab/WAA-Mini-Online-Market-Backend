@@ -1,5 +1,7 @@
 package com.example.waaonlineminimarketbackend.entity;
 
+import com.example.waaonlineminimarketbackend.entity.enums.Order_Status;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,15 +16,16 @@ import java.util.List;
 @Table(name = "orders")
 public class Order {
     @Id
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long orderId;
-    private String orderDate;
-    private String orderTime;
+    private Long id;
 
-    @OneToMany()
-    @JoinColumn(name = "order_id")
-    List<Item> itemList;
+    @NotNull
+    private Order_Status status;
 
-    @OneToOne
-    private OrderStatus orderStatus;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Item> itemList;
+
+    @NotNull
+    private String buyer_email;
 }

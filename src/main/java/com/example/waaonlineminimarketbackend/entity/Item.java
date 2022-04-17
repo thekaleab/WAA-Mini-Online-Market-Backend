@@ -1,5 +1,6 @@
 package com.example.waaonlineminimarketbackend.entity;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,13 +14,26 @@ import java.util.List;
 @AllArgsConstructor
 public class Item {
     @Id
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long itemId;
-    private String name;
-    private double price;
-    private int quantity;
+    private Long id;
+    @Column(nullable = false)
+    @NotNull
 
-    @OneToMany()
-    @JoinColumn(name = "item_id")
-    private List<Review> reviewList;
+    private String name;
+
+    @Column(nullable = false)
+    @NotNull
+
+    private String description;
+
+    @NotNull
+    private double price;
+
+    private boolean isAvailable = true;
+    @ManyToOne
+    private Seller seller;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
+    private List<Review> reviews;
 }
