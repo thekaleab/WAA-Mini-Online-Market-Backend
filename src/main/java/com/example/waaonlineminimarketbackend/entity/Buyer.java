@@ -33,7 +33,6 @@ public class Buyer {
     private String email;
 
 //    @Column(nullable = false)
-    @Transient
 
     private String password;
 
