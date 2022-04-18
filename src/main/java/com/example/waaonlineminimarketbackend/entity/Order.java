@@ -23,9 +23,12 @@ public class Order {
     @NotNull
     private Order_Status status;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Item> itemList;
+    @OneToOne
+    private ShoppingCart shoppingCart;
 
     @NotNull
     private String buyer_email;
+
+    @ManyToOne
+    private Buyer buyer;
 }

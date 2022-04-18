@@ -7,6 +7,7 @@ import com.example.waaonlineminimarketbackend.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -42,6 +43,6 @@ public class OrderServiceImpl implements OrderService {
 //        order.setOrderDate(o.getOrderDate());
 //        order.setOrderStatus(o.getOrderStatus());
 //        order.setOrderTime(o.getOrderTime());
-        order.setItemList(o.getItemList());
+//        order.setItemList(o.getItemList());
     }
 }

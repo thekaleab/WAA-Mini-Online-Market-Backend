@@ -19,6 +19,7 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     public Seller getSellerById(long id) {
+        System.out.println(id);
         return sellerRepository.getById(id);
     }
 }

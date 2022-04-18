@@ -6,6 +6,7 @@ import com.example.waaonlineminimarketbackend.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -31,17 +32,23 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void deleteItemById(long id) {
-        itemRepository.deleteById(id);
+        var item = itemRepository.getById(id);
+        if (item.isAvailable()) {
+            itemRepository.deleteById(id);
+        }
     }
+
 
     @Override
     public void UpdateItemById(long id, Item i) {
+        System.out.println(i);
         var item = itemRepository.getById(id);
-//        item.setItemId(i.getItemId());
-//        item.setName(i.getName());
-//        item.setPrice(i.getPrice());
-//        item.setQuantity(i.getQuantity());
-//        item.setReviewList(i.getReviewList());
+
+        item.setName(i.getName());
+        item.setPrice(i.getPrice());
+        item.setAvailable(i.isAvailable());
+
+        itemRepository.save(item);
     }
 
 }

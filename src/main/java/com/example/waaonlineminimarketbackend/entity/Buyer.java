@@ -1,5 +1,6 @@
 package com.example.waaonlineminimarketbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,37 +17,39 @@ import java.util.Set;
 
 public class Buyer {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String firstname;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
 
     private String lastname;
 
-    @Column(unique = true, nullable = false)
+//    @Column(unique = true, nullable = false)
 
     private String email;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     @Transient
 
     private String password;
 
-    @OneToOne()
-    private Address address;
+    @OneToMany
+    private List<Address> address;
 
-    private final String role = "BUYER";
+//    @JsonIgnore
+////    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "followers")
+//    private Set<Seller> followingSellers = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "followers")
-    private Set<Seller> followingSellers = new HashSet<>();
-
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToOne(mappedBy = "buyer",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private ShoppingCart shoppingCart;
+
+    @OneToMany()
+    List<Order> orderList;
 
     private Integer points;
 

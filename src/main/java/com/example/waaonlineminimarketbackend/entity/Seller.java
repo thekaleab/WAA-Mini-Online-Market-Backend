@@ -1,8 +1,7 @@
 package com.example.waaonlineminimarketbackend.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -26,19 +25,20 @@ public class Seller {
     private String lastname;
 
 
-    private String email; // somebody@email.com
+    private String email;
 
 
     private String password;
 
     private boolean approved = false;
 
-    @Transient
-    private String role = "SELLER";
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "buyer_seller_follow")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+
     private Set<Buyer> followers = new HashSet<>();
     @OneToMany(mappedBy = "seller")
-    private List<Item> productList;
+    private List<Item> itemList;
 }

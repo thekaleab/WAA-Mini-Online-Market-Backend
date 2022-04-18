@@ -11,8 +11,13 @@ public class SellerController {
     @Autowired
     SellerService sellerService;
 
+    @PostMapping
+    public void registerSeller(@RequestBody Seller seller) {
+        sellerService.saveSeller(seller);
+    }
+
     @GetMapping("/{id}")
-    public Seller getSellerById( @PathVariable("id") long id) {
+    public Seller getSellerById( @PathVariable long id) {
         return sellerService.getSellerById(id);
     }
 

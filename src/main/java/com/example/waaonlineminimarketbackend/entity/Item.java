@@ -1,5 +1,6 @@
 package com.example.waaonlineminimarketbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,16 +23,17 @@ public class Item {
 
     private String name;
 
-    @Column(nullable = false)
-    @NotNull
+//    @Column(nullable = false)
+//    @NotNull
 
     private String description;
 
-    @NotNull
+//    @NotNull
     private double price;
 
     private boolean isAvailable = true;
     @ManyToOne
+    @JsonIgnore
     private Seller seller;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
