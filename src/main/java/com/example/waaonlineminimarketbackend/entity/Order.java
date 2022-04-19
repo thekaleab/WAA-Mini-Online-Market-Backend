@@ -1,5 +1,7 @@
 package com.example.waaonlineminimarketbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +24,7 @@ public class Order {
 
     @OneToOne
     @JoinColumn(name = "product_id")
+    @JsonIgnore
     private Product product;
 
     @OneToOne
@@ -29,5 +32,6 @@ public class Order {
     private OrderStatus status;
 
     @ManyToOne
+    @JsonIgnore
     private User buyer;
 }

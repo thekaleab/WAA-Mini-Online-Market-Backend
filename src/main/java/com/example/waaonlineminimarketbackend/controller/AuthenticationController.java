@@ -22,15 +22,12 @@ public class AuthenticationController {
 
     @PostMapping
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        LoginResponse loginResponse = null;
         try{
-             loginResponse = authService.login(loginRequest);
+            return ResponseEntity.ok(authService.login(loginRequest));
         }
         catch (Exception e){
             return ResponseEntity.notFound().build();
         }
-
-        return ResponseEntity.ok().body(loginResponse);
     }
 
     @PostMapping("/refreshToken")
