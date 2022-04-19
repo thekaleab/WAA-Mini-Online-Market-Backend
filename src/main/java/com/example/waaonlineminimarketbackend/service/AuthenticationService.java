@@ -5,6 +5,6 @@ import com.example.waaonlineminimarketbackend.entity.dto.input.RefreshTokenReque
 import com.example.waaonlineminimarketbackend.entity.dto.output.LoginResponse;
 
 public interface AuthenticationService {
-    LoginResponse login(LoginRequest loginRequest);
+    LoginResponse login(LoginRequest loginRequest) throws Exception;
     LoginResponse refreshToken(RefreshTokenRequest refreshTokenRequest);
 }
