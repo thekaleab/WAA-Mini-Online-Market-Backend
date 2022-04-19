@@ -36,6 +36,9 @@ public class ProductServiceImpl implements ProductService {
         if(seller == null) {
             throw new Exception("Cannot create a product without seller");
         }
+        if(!seller.getIsSellerApproved()) {
+            throw new Exception("User not approved to sell");
+        }
         newProduct.setSeller(seller);
         productRepository.save(newProduct);
 

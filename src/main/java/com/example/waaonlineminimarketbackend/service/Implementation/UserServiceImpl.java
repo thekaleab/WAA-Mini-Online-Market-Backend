@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
     public void UpdateUserStatus(long id, UserUpdateDto userD) {
         var seller = userRepository.getById(id);
         seller.setIsSellerApproved(userD.getStatus());
+        userRepository.save(seller);
     }
 
 //    @Override

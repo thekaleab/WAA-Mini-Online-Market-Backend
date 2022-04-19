@@ -46,7 +46,7 @@ public class ReviewServiceImpl implements ReviewService {
     public void UpdateReviewStatus(long id, ReviewInputDto reviewD) {
         var review = reviewRepository.getById(id);
         review.setApproved(reviewD.getStatus());
-
+        reviewRepository.save(review);
     }
 
 
