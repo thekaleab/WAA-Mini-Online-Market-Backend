@@ -10,12 +10,11 @@ import java.util.List;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
-    @Autowired
     ReviewRepository reviewRepository;
 
     @Override
     public void saveReview(Review review) {
-     reviewRepository.save(review);
+        reviewRepository.save(review);
     }
 
     @Override
@@ -30,15 +29,25 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void deleteReviewById(long id) {
-         reviewRepository.deleteById(id);
+        reviewRepository.deleteById(id);
 
     }
 
     @Override
     public void UpdateReviewById(long id, Review rv) {
         var review = reviewRepository.getById(id);
-//        review.setReviewId(rv.getReviewId());
-//        review.setName(rv.getName());
+      review.setId(rv.getId());
+      review.setContent(rv.getContent());
 
+    }
+
+    @Override
+    public void rejectReview(Long id) {
+        reviewRepository.rejectReview(id);
+    }
+
+    @Override
+    public void approveReview(Long id) {
+        reviewRepository.approveReview(id);
     }
 }

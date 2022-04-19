@@ -14,14 +14,17 @@ public class ReviewController {
 
     @Autowired
     ReviewService reviewService;
+
     @PostMapping
     public void addReview(@RequestBody Review review){
             reviewService.saveReview(review);
     }
+
     @GetMapping
     public List<Review> getAllReview(){
         return reviewService.getAllReview();
     }
+
     @GetMapping("/{id}")
     public Review getReviewById(@PathVariable long id){
         return reviewService.getReviewById(id);
