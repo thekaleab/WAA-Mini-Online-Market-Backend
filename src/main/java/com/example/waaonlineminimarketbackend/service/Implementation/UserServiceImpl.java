@@ -4,6 +4,7 @@ import com.example.waaonlineminimarketbackend.entity.User;
 import com.example.waaonlineminimarketbackend.entity.dto.input.UserInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.input.UserUpdateDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.UserOutputDto;
+import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
 import com.example.waaonlineminimarketbackend.repository.UserRepository;
 import com.example.waaonlineminimarketbackend.service.UserService;
 import com.example.waaonlineminimarketbackend.util.ListMapper;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public void saveUser(UserInputDto userD) {
+    public void saveUser(UserInputDto userD) throws BadRequestException {
         User newUser = new User();
         modelMapper.map(userD, newUser);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
