@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class UserOutputDto {
     private String firstName;
     private String lastName;
+    private String password;
     private String email;
     private Role role;
 }

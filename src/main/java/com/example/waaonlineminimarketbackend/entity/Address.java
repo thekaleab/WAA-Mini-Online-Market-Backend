@@ -1,8 +1,6 @@
 package com.example.waaonlineminimarketbackend.entity;
 
 
-import com.example.waaonlineminimarketbackend.entity.enums.Address_Type;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +19,9 @@ public class Address {
     private String state;
     private String zipCode;
 
-    private Address_Type address_type;
+    @OneToOne
+    @JoinColumn(name="type_id")
+    private AddressType addressType;
 
 
 
