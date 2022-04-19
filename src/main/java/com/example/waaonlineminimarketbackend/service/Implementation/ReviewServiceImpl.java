@@ -57,7 +57,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void UpdateReviewStatus(long reviewId, ReviewInputDto reviewD) {
-        var productId = reviewD.getId();
+        var productId = reviewD.getProductId();
         var product = productRepository.getById(productId);
         var reviews = product.getReviews();
         var review = reviews.stream().filter(rv->(rv.getId() == reviewId)).findFirst().orElse(null);
