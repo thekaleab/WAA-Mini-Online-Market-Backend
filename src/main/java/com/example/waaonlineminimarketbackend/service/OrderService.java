@@ -4,15 +4,15 @@ import com.example.waaonlineminimarketbackend.entity.Order;
 import com.example.waaonlineminimarketbackend.entity.OrderStatus;
 import com.example.waaonlineminimarketbackend.entity.dto.input.OrderInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.input.OrderStatusInputDto;
-import com.example.waaonlineminimarketbackend.entity.dto.input.OrderUpdateInputDto;
+import com.example.waaonlineminimarketbackend.entity.dto.output.OrderOutputDto;
 
 import java.util.List;
 
 public interface OrderService {
 
      void saveOrder(OrderInputDto orderD) throws Exception;
-     List<Order> getAllOrder();
-     List<Order> getByBuyer(long id);
+     List<OrderOutputDto> getAllOrder();
+     List<OrderOutputDto> getByBuyer(long id);
      Order getOrderById(long id);
      void deleteOrderById(long id);
      void UpdateOrderById(long id, OrderStatus orderD);

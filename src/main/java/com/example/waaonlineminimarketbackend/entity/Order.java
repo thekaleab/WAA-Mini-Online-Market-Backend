@@ -8,6 +8,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -20,12 +24,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int quantity;
-
-    @OneToOne
-    @JoinColumn(name = "product_id")
-    @JsonIgnore
-    private Product product;
+    private double amount;
+    private LocalDateTime orderTime;
+    private LocalDateTime updatedTime;
 
     @OneToOne
     @JoinColumn(name="status_id")
@@ -34,4 +35,9 @@ public class Order {
     @ManyToOne
     @JsonIgnore
     private User buyer;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="order_id")
+    @JsonIgnore
+    private List<OrderItem> orderItems;
 }
