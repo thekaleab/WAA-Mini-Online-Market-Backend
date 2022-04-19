@@ -1,13 +1,11 @@
 package com.example.waaonlineminimarketbackend.service.Implementation;
 
-import com.example.waaonlineminimarketbackend.entity.Item;
 import com.example.waaonlineminimarketbackend.entity.Order;
 import com.example.waaonlineminimarketbackend.repository.OrderRepository;
 import com.example.waaonlineminimarketbackend.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 
 @Service

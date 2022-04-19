@@ -16,10 +16,25 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String firstName;
+    private String lastName;
 
     @Column(unique = true)
     private String email;
     private String password;
-    private String role;
 
+    @OneToMany
+    @JoinColumn(name="user_id")
+    List<Address> addresses;
+
+    @OneToOne
+    private Role role;
+
+    @OneToMany
+    @JoinColumn(name="buyer_id")
+    List<Order> orders;
+
+    @OneToMany
+    @JoinColumn(name="seller_id")
+    List<Product> products;
 }

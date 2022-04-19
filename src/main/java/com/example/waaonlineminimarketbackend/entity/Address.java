@@ -21,10 +21,6 @@ public class Address {
     private String state;
     private String zipCode;
 
-    @ManyToOne
-    @JsonIgnore
-    private Buyer buyer;
-
     private Address_Type address_type;
 
 

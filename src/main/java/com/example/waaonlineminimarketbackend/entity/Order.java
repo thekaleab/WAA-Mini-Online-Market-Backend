@@ -23,12 +23,6 @@ public class Order {
     @NotNull
     private Order_Status status;
 
-    @OneToOne
-    private ShoppingCart shoppingCart;
-
-    @NotNull
-    private String buyer_email;
-
     @ManyToOne
-    private Buyer buyer;
+    private User buyer;
 }

@@ -21,13 +21,4 @@ public class Review {
 
     private boolean approved;
 
-
-
-    @ManyToOne()
-    @JoinColumn(name = "buyer_id")
-    private Buyer buyer;
-
-    @ManyToOne
-    private Item item;
-
 }

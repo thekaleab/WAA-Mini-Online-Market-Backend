@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Item {
+public class Product {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,14 +28,17 @@ public class Item {
 
     private String description;
 
+    private String tag;
+
 //    @NotNull
     private double price;
+    private int quantity;
 
-    private boolean isAvailable = true;
-    @ManyToOne
+    @ManyToMany
     @JsonIgnore
-    private Seller seller;
+    private List<User> users;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name="product_id")
     private List<Review> reviews;
 }

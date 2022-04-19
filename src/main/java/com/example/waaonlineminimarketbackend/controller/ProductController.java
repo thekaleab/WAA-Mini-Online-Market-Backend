@@ -1,8 +1,7 @@
 package com.example.waaonlineminimarketbackend.controller;
 
-import com.example.waaonlineminimarketbackend.entity.Address;
-import com.example.waaonlineminimarketbackend.entity.Item;
-import com.example.waaonlineminimarketbackend.service.ItemService;
+import com.example.waaonlineminimarketbackend.entity.Product;
+import com.example.waaonlineminimarketbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,27 +9,27 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/items")
-public class ItemController {
+public class ProductController {
 
     @Autowired
-    ItemService itemService;
+    ProductService itemService;
 
     @PostMapping
-    public void addItem(@RequestBody Item item){
+    public void addItem(@RequestBody Product item){
         itemService.saveItem(item);
 
     }
     @GetMapping
-    public List<Item> getAllItem() {
+    public List<Product> getAllItem() {
 
         return itemService.getAllItem();
     }
     @GetMapping("/{id}")
-    public Item getItmeById(@PathVariable long id){
+    public Product getItmeById(@PathVariable long id){
         return itemService.getItemById(id);
     }
     @PutMapping("/{id}")
-    public void updateItemById(@PathVariable long id, @RequestBody Item item){
+    public void updateItemById(@PathVariable long id, @RequestBody Product item){
         itemService.UpdateItemById(id, item);
 
     }

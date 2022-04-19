@@ -20,8 +20,8 @@ public class UserController {
     public void addUser(@RequestBody User user){
         System.out.println(user);
         userService.saveUser(user);
-
     }
+
     @GetMapping
     public List<UserOutputDto> getAlluser(){
         System.out.println("Inside ");
@@ -34,11 +34,11 @@ public class UserController {
 //        return userService.getUserById(id);
     }
 
-//    @PutMapping("/{id}")
-//    public void updateUserById(@PathVariablelong id, User user){
-//
-//
-//    }
+    @PutMapping("/{id}")
+    public void updateUserById(@PathVariable long id, User user){
+
+
+    }
     @DeleteMapping("/{id}")
     public void deleteUserById(@PathVariable long id){
         System.out.println(id);

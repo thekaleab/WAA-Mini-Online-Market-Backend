@@ -1,6 +1,5 @@
 package com.example.waaonlineminimarketbackend.service;
 
-import com.example.waaonlineminimarketbackend.entity.Item;
 import com.example.waaonlineminimarketbackend.entity.Order;
 
 import java.util.List;
