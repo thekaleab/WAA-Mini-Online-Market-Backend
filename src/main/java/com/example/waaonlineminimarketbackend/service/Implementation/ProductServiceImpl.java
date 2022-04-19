@@ -1,8 +1,10 @@
 package com.example.waaonlineminimarketbackend.service.Implementation;
 
 import com.example.waaonlineminimarketbackend.entity.Product;
+import com.example.waaonlineminimarketbackend.entity.dto.input.ProductInputDto;
 import com.example.waaonlineminimarketbackend.repository.ProductRepository;
 import com.example.waaonlineminimarketbackend.service.ProductService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,42 +14,42 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
-    ProductRepository itemRepository;
+    ProductRepository productRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
-    public void saveItem(Product item) {
-        itemRepository.save(item);
+    public void saveItem(ProductInputDto productD) {
+        Product newProduct = new Product();
+        modelMapper.map(productD, newProduct);
+        productRepository.save(newProduct);
     }
 
     @Override
     public List<Product> getAllItem() {
-        return itemRepository.findAll();
+        return productRepository.findAll();
     }
 
     @Override
     public Product getItemById(long id) {
-        return itemRepository.getById(id);
+        return productRepository.getById(id);
     }
 
     @Override
     public void deleteItemById(long id) {
-//        var item = itemRepository.getById(id);
-//        if (item.isAvailable()) {
-//            itemRepository.deleteById(id);
-//        }
+//        var product = productRepository.getById(id);
+////        if (product.isAvailable()) {
+//            productRepository.deleteById(id);
+////        } // TODO
     }
 
 
     @Override
-    public void UpdateItemById(long id, Product i) {
-//        System.out.println(i);
-//        var item = itemRepository.getById(id);
-//
-//        item.setName(i.getName());
-//        item.setPrice(i.getPrice());
-//        item.setAvailable(i.isAvailable());
-//
-//        itemRepository.save(item);
+    public void UpdateItemById(long id, Product incomingProduct) {
+        var storedProduct = productRepository.getById(id);
+        modelMapper.map(incomingProduct, storedProduct);
+        productRepository.save(storedProduct);
     }
 
 }
