@@ -15,9 +15,10 @@ public class AuthenticatedUser {
     UserRepository userRepository;
 
     public User getCurrentUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetail =(UserDetails) auth.getDetails();
-        User user = userRepository.findByEmail(userDetail.getUsername());
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        UserDetails userDetail =(UserDetails) auth.getDetails();
+//        User user = userRepository.findByEmail(userDetail.getUsername());
+        User user = userRepository.getById(18L);
         return user;
     }
 }

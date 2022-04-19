@@ -15,10 +15,10 @@ public class JwtUtil {
     private String secret = "some_secret_key";
 
 
-    private long accessTokenexpiration = 600000L;
+    private long accessTokenexpiration = 6000000000L;
 
 
-    private long refreshTokenExpiration = 900000L;
+    private long refreshTokenExpiration = 90000000000L;
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
