@@ -2,6 +2,7 @@ package com.example.waaonlineminimarketbackend.service.Implementation;
 
 import com.example.waaonlineminimarketbackend.entity.User;
 import com.example.waaonlineminimarketbackend.entity.dto.input.UserInputDto;
+import com.example.waaonlineminimarketbackend.entity.dto.input.UserUpdateDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.UserOutputDto;
 import com.example.waaonlineminimarketbackend.repository.UserRepository;
 import com.example.waaonlineminimarketbackend.service.UserService;
@@ -54,6 +55,12 @@ public class UserServiceImpl implements UserService {
     public void deleteUserById(long id) {
         userRepository.deleteById(id);
 
+    }
+
+    @Override
+    public void UpdateUserStatus(long id, UserUpdateDto userD) {
+        var seller = userRepository.getById(id);
+        seller.setIsSellerApproved(userD.getStatus());
     }
 
 //    @Override

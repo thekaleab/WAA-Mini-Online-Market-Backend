@@ -30,6 +30,8 @@ public class User {
     @OneToOne
     private Role role;
 
+    private Boolean isSellerApproved;
+
     @OneToMany
     @JoinColumn(name="buyer_id")
     List<Order> orders;

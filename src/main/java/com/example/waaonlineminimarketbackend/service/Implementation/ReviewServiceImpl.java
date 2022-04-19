@@ -1,6 +1,7 @@
 package com.example.waaonlineminimarketbackend.service.Implementation;
 
 import com.example.waaonlineminimarketbackend.entity.Review;
+import com.example.waaonlineminimarketbackend.entity.dto.input.ReviewInputDto;
 import com.example.waaonlineminimarketbackend.repository.ReviewRepository;
 import com.example.waaonlineminimarketbackend.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,11 @@ import java.util.List;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
-    @Autowired
     ReviewRepository reviewRepository;
 
     @Override
     public void saveReview(Review review) {
-     reviewRepository.save(review);
+        reviewRepository.save(review);
     }
 
     @Override
@@ -30,15 +30,24 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void deleteReviewById(long id) {
-         reviewRepository.deleteById(id);
+        reviewRepository.deleteById(id);
 
     }
 
     @Override
     public void UpdateReviewById(long id, Review rv) {
         var review = reviewRepository.getById(id);
-//        review.setReviewId(rv.getReviewId());
-//        review.setName(rv.getName());
+      review.setId(rv.getId());
+      review.setContent(rv.getContent());
 
     }
+
+    @Override
+    public void UpdateReviewStatus(long id, ReviewInputDto reviewD) {
+        var review = reviewRepository.getById(id);
+        review.setApproved(reviewD.getStatus());
+
+    }
+
+
 }
