@@ -2,8 +2,10 @@ package com.example.waaonlineminimarketbackend.service.Implementation;
 
 import com.example.waaonlineminimarketbackend.entity.Product;
 import com.example.waaonlineminimarketbackend.entity.dto.input.ProductInputDto;
+import com.example.waaonlineminimarketbackend.entity.dto.output.OrderItemOutputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.ProductOutputDto;
 import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
+import com.example.waaonlineminimarketbackend.repository.OrderItemRepository;
 import com.example.waaonlineminimarketbackend.repository.OrderRepository;
 import com.example.waaonlineminimarketbackend.repository.ProductRepository;
 import com.example.waaonlineminimarketbackend.service.ProductService;
@@ -22,6 +24,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    OrderItemRepository orderItemRepository;
 
     @Autowired
     ModelMapper modelMapper;
@@ -66,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteItemById(long id) throws Exception {
         var product = productRepository.getById(id);
-        var orderForProductExists = orderRepository.findByProductId(id).stream().findAny().isPresent();
+        var orderForProductExists = orderItemRepository.findByProductId(id).stream().findAny().isPresent();
         if (!orderForProductExists) {
             productRepository.deleteById(id);
         } else {

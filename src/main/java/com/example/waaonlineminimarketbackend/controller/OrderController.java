@@ -1,11 +1,11 @@
 package com.example.waaonlineminimarketbackend.controller;
 
-import com.example.waaonlineminimarketbackend.entity.Address;
 import com.example.waaonlineminimarketbackend.entity.Order;
 import com.example.waaonlineminimarketbackend.entity.OrderStatus;
 import com.example.waaonlineminimarketbackend.entity.dto.input.OrderInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.input.OrderStatusInputDto;
-import com.example.waaonlineminimarketbackend.entity.dto.input.OrderUpdateInputDto;
+import com.example.waaonlineminimarketbackend.entity.dto.output.OrderOutputDto;
+import com.example.waaonlineminimarketbackend.entity.dto.output.OrderOutputDto;
 import com.example.waaonlineminimarketbackend.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,16 +30,17 @@ public class OrderController {
         }
     }
     @GetMapping
-    public List<Order> getAllOrder(){
+    public List<OrderOutputDto> getAllOrder(){
         return orderService.getAllOrder();
     }
+
     @GetMapping("/{id}")
     public Order getOrderById(@PathVariable long id){
         return orderService.getOrderById(id);
     }
 
     @GetMapping("/buyer/{id}")
-    public List<Order> getByBuyer(@PathVariable long id){
+    public List<OrderOutputDto> getByBuyer(@PathVariable long id){
         return orderService.getByBuyer(id);
     }
 
