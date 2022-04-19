@@ -19,36 +19,31 @@ public class UserServiceImpl implements UserService {
     @Autowired
     ModelMapper modelMapper;
 
-
-
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    public ListMapper<User, UserInputDto> listMapper;
+    public ListMapper<User, UserOutputDto> listMapper;
 
 
     @Override
-    public void saveUser(User user) {
-//        if(user.getRole().equals())
-        userRepository.save(user);
-
+    public void saveUser(UserInputDto userD) {
+        User newUser = new User();
+        modelMapper.map(userD, newUser);
+        userRepository.save(newUser);
     }
 
     @Override
     public List<UserOutputDto> getAllUser() {
-        System.out.println("Inside");
-        System.out.println(listMapper.mapList(userRepository.findAll(), new UserInputDto()));
-
-//        System.out.println(userRepository.findAll());
-//        return  (userRepository.findAll());
-        return null;
+        return (List<UserOutputDto>)listMapper.mapList(userRepository.findAll(), new UserOutputDto());
     }
 
     @Override
     public UserOutputDto getUserById(long id) {
-//        return userRepository.findById(id).orElse(null);
-        return null;
+        var user =  userRepository.getById(id);
+        UserOutputDto userDto = new UserOutputDto();
+        modelMapper.map(user, userDto);
+        return userDto;
     }
 
     @Override

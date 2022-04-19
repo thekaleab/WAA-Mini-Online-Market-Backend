@@ -17,21 +17,19 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public void addUser(@RequestBody User user){
-        System.out.println(user);
-        userService.saveUser(user);
+    public void addUser(@RequestBody UserInputDto userD){
+//        System.out.println(user);
+        userService.saveUser(userD);
     }
 
     @GetMapping
     public List<UserOutputDto> getAlluser(){
-        System.out.println("Inside ");
-        return null;
-//        return userService.getAllUser();
+//        System.out.println("Inside ");
+        return userService.getAllUser();
     }
     @GetMapping("/{id}")
     public UserOutputDto getUserById(@PathVariable long id){
-        return null;
-//        return userService.getUserById(id);
+        return userService.getUserById(id);
     }
 
     @PutMapping("/{id}")

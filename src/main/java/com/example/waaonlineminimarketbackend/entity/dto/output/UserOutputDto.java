@@ -1,5 +1,6 @@
 package com.example.waaonlineminimarketbackend.entity.dto.output;
 
+import com.example.waaonlineminimarketbackend.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserOutputDto {
-    private long id;
-    private String username;
-
+    private String firstName;
+    private String lastName;
+    private String email;
+    private Role role;
 }
