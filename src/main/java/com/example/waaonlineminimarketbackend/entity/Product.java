@@ -29,15 +29,15 @@ public class Product {
     @Column(columnDefinition="TEXT")
     private String description;
 
-    private String tag;
+    private String category;
 
 //    @NotNull
     private double price;
     private int quantity;
 
-    @ManyToMany
+    @ManyToOne
     @JsonIgnore
-    private List<User> user;
+    private User seller;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name="product_id")

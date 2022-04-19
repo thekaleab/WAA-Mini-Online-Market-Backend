@@ -5,6 +5,7 @@ import com.example.waaonlineminimarketbackend.entity.dto.input.ProductInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.ProductOutputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.ResponseBodyDto;
 import com.example.waaonlineminimarketbackend.service.ProductService;
+import com.example.waaonlineminimarketbackend.util.AuthenticatedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +21,22 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<?> addItem(@RequestBody ProductInputDto productD){
-        var result = productService.saveItem(productD);
-        return ResponseEntity.ok(result);
+        try {
+            var result = productService.saveItem(productD);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Cannot create Product");
+        }
     }
 
     @GetMapping
     public List<Product> getAllItem() {
         return productService.getAllItem();
+    }
+
+    @GetMapping("/seller/{id}")
+    public List<Product> getSellerProducts(@PathVariable long id) {
+        return productService.getAllBySeller(id);
     }
 
     @GetMapping("/{id}")

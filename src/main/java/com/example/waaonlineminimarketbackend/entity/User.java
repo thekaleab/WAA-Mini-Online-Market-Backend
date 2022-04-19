@@ -36,7 +36,6 @@ public class User {
     @JoinColumn(name="buyer_id")
     List<Order> orders;
 
-    @OneToMany
-    @JoinColumn(name="seller_id")
+    @OneToMany(mappedBy = "seller")
     List<Product> products;
 }

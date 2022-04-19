@@ -16,7 +16,7 @@ import java.util.List;
 public class ProductInputDto {
     private String name;
     private String description;
-    private String tag;
+    private String category;
     private double price;
     private int quantity;
 }
