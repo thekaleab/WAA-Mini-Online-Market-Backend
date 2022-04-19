@@ -2,11 +2,13 @@ package com.example.waaonlineminimarketbackend.service;
 
 import com.example.waaonlineminimarketbackend.entity.Review;
 import com.example.waaonlineminimarketbackend.entity.dto.input.ReviewInputDto;
+import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface ReviewService {
-     void saveReview(Review review);
+    Review saveReview(Review review) throws BadRequestException;
 
      List<Review> getAllReview();
 

@@ -4,6 +4,7 @@ import com.example.waaonlineminimarketbackend.entity.Address;
 import com.example.waaonlineminimarketbackend.entity.Review;
 import com.example.waaonlineminimarketbackend.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +17,13 @@ public class ReviewController {
     ReviewService reviewService;
 
     @PostMapping
-    public void addReview(@RequestBody Review review){
-            reviewService.saveReview(review);
+    public ResponseEntity<?> addReview(@RequestBody Review review){
+        try {
+            var result = reviewService.saveReview(review);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping
