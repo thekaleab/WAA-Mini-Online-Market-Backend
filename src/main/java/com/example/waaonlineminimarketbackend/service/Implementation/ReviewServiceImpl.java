@@ -2,20 +2,33 @@ package com.example.waaonlineminimarketbackend.service.Implementation;
 
 import com.example.waaonlineminimarketbackend.entity.Review;
 import com.example.waaonlineminimarketbackend.entity.dto.input.ReviewInputDto;
+import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
+import com.example.waaonlineminimarketbackend.repository.ProductRepository;
 import com.example.waaonlineminimarketbackend.repository.ReviewRepository;
 import com.example.waaonlineminimarketbackend.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
+    @Autowired
     ReviewRepository reviewRepository;
 
+    @Autowired
+    ProductRepository productRepository;
+
+
     @Override
-    public void saveReview(Review review) {
-        reviewRepository.save(review);
+    public Review saveReview(Review review)  throws BadRequestException {
+        if(review.isApproved()==true){
+         return  reviewRepository.save(review);
+        }else {
+            throw new BadRequestException("Review is not approved");
+        }
     }
 
     @Override
@@ -43,11 +56,13 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void UpdateReviewStatus(long id, ReviewInputDto reviewD) {
-        var review = reviewRepository.getById(id);
+    public void UpdateReviewStatus(long reviewId, ReviewInputDto reviewD) {
+        var productId = reviewD.getId();
+        var product = productRepository.getById(productId);
+        var reviews = product.getReviews();
+        var review = reviews.stream().filter(rv->(rv.getId() == reviewId)).findFirst().orElse(null);
         review.setApproved(reviewD.getStatus());
         reviewRepository.save(review);
     }
-
 
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewInputDto {
-     private long id;
+     private long productId;
      private Boolean status;
+
 }
