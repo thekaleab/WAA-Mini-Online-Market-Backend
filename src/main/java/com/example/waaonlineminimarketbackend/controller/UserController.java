@@ -5,7 +5,9 @@ import com.example.waaonlineminimarketbackend.entity.dto.input.UserInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.UserOutputDto;
 import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
 import com.example.waaonlineminimarketbackend.service.UserService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,9 +30,8 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserOutputDto> getAlluser(){
-//        System.out.println("Inside ");
-        return userService.getAllUser();
+    public ResponseEntity<?> getAlluser(){
+        return ResponseEntity.ok(userService.getAllUser());
     }
     @GetMapping("/{id}")
     public UserOutputDto getUserById(@PathVariable long id){

@@ -34,6 +34,7 @@ public class Product {
 //    @NotNull
     private double price;
     private int quantity;
+    private String imgUrl;
 
     @ManyToOne
     @JsonIgnore

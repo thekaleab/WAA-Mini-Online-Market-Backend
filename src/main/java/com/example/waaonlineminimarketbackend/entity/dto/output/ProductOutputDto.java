@@ -16,4 +16,5 @@ public class ProductOutputDto {
     private String category;
     private double price;
     private int quantity;
+    private String imgUrl;
 }
