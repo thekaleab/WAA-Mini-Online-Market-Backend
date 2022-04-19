@@ -73,8 +73,14 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setUpdatedTime(now);
         newOrder.setAmount(total);
         newOrder.setBuyer(buyer);
-
         orderRepository.save(newOrder);
+
+        for(OrderItem oItem: orderItems) {
+            var product = productRepository.getById(oItem.getProduct().getId());
+            product.setQuantity(product.getQuantity() - oItem.getQuantity());
+            productRepository.save(product);
+        }
+
     }
 
     @Override
