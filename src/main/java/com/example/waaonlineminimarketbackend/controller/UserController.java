@@ -3,6 +3,7 @@ package com.example.waaonlineminimarketbackend.controller;
 import com.example.waaonlineminimarketbackend.entity.User;
 import com.example.waaonlineminimarketbackend.entity.dto.input.UserInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.UserOutputDto;
+import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
 import com.example.waaonlineminimarketbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,12 @@ public class UserController {
 
     @PostMapping
     public void addUser(@RequestBody UserInputDto userD){
-//        System.out.println(user);
-        userService.saveUser(userD);
+        try {
+            userService.saveUser(userD);
+        } catch(BadRequestException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     @GetMapping

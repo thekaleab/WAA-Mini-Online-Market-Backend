@@ -3,6 +3,7 @@ package com.example.waaonlineminimarketbackend.service.Implementation;
 import com.example.waaonlineminimarketbackend.entity.Product;
 import com.example.waaonlineminimarketbackend.entity.dto.input.ProductInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.ProductOutputDto;
+import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
 import com.example.waaonlineminimarketbackend.repository.OrderRepository;
 import com.example.waaonlineminimarketbackend.repository.ProductRepository;
 import com.example.waaonlineminimarketbackend.service.ProductService;
@@ -29,15 +30,15 @@ public class ProductServiceImpl implements ProductService {
     AuthenticatedUser authenticatedUser;
 
     @Override
-    public ProductOutputDto saveItem(ProductInputDto productD) throws Exception {
+    public ProductOutputDto saveItem(ProductInputDto productD) throws BadRequestException {
         Product newProduct = new Product();
         modelMapper.map(productD, newProduct);
         var seller =  authenticatedUser.getCurrentUser();
         if(seller == null) {
-            throw new Exception("Cannot create a product without seller");
+            throw new BadRequestException("Cannot create a product without seller");
         }
         if(!seller.getIsSellerApproved()) {
-            throw new Exception("User not approved to sell");
+            throw new BadRequestException("User not approved to sell");
         }
         newProduct.setSeller(seller);
         productRepository.save(newProduct);
