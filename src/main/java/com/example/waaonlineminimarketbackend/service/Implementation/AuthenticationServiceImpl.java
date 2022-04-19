@@ -3,10 +3,12 @@ package com.example.waaonlineminimarketbackend.service.Implementation;
 import com.example.waaonlineminimarketbackend.entity.dto.input.LoginRequest;
 import com.example.waaonlineminimarketbackend.entity.dto.input.RefreshTokenRequest;
 import com.example.waaonlineminimarketbackend.entity.dto.output.LoginResponse;
+import com.example.waaonlineminimarketbackend.repository.UserRepository;
 import com.example.waaonlineminimarketbackend.security.JwtUtil;
 import com.example.waaonlineminimarketbackend.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +23,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final JwtUtil jwtHelper;
+    private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
+
     @Override
     public LoginResponse login(LoginRequest loginRequest) throws Exception {
         try {
@@ -37,7 +42,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         final String accessToken = jwtHelper.generateToken(userDetails);
         final String refreshToken = jwtHelper.generateRefreshToken(loginRequest.getEmail());
-        var loginResponse = new LoginResponse(accessToken, refreshToken);
+        var user = userRepository.findByEmail(userDetails.getUsername());
+        var loginResponse = new LoginResponse();
+        loginResponse.setId(user.getId());
+        loginResponse.setFirstName(user.getFirstName());
+        loginResponse.setEmail(user.getEmail());
+        loginResponse.setLastName(user.getLastName());
+        loginResponse.setRole(user.getRole());
+        loginResponse.setAccessToken(accessToken);
+        loginResponse.setRefreshToken(refreshToken);
         return loginResponse;
     }
 
