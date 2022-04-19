@@ -2,41 +2,52 @@ package com.example.waaonlineminimarketbackend.controller;
 
 import com.example.waaonlineminimarketbackend.entity.Product;
 import com.example.waaonlineminimarketbackend.entity.dto.input.ProductInputDto;
+import com.example.waaonlineminimarketbackend.entity.dto.output.ProductOutputDto;
+import com.example.waaonlineminimarketbackend.entity.dto.output.ResponseBodyDto;
 import com.example.waaonlineminimarketbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/v1/products")
 public class ProductController {
 
     @Autowired
     ProductService productService;
 
     @PostMapping
-    public void addItem(@RequestBody ProductInputDto productD){
-        productService.saveItem(productD);
-
+    public ResponseEntity<?> addItem(@RequestBody ProductInputDto productD){
+        var result = productService.saveItem(productD);
+        return ResponseEntity.ok(result);
     }
+
     @GetMapping
     public List<Product> getAllItem() {
-
         return productService.getAllItem();
     }
 
     @GetMapping("/{id}")
-    public Product getItmeById(@PathVariable long id){
+    public Product getItemById(@PathVariable long id){
         return productService.getItemById(id);
     }
-    @PutMapping("/{id}")
-    public void updateItemById(@PathVariable long id, @RequestBody Product item){
-        productService.UpdateItemById(id, item);
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateItemById(@PathVariable long id, @RequestBody ProductInputDto productD){
+        var result = productService.UpdateItemById(id, productD);
+        return ResponseEntity.ok(result);
     }
+
     @DeleteMapping("/{id}")
-    public void deleteItemById(@PathVariable long id){
-        productService.deleteItemById(id);
+    public ResponseEntity<?> deleteItemById(@PathVariable long id){
+        try {
+            productService.deleteItemById(id);
+            return ResponseEntity.accepted().body("Resource deleted");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Product can not be deleted");
+        }
+
     }
 }

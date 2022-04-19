@@ -2,6 +2,8 @@ package com.example.waaonlineminimarketbackend.service.Implementation;
 
 import com.example.waaonlineminimarketbackend.entity.Product;
 import com.example.waaonlineminimarketbackend.entity.dto.input.ProductInputDto;
+import com.example.waaonlineminimarketbackend.entity.dto.output.ProductOutputDto;
+import com.example.waaonlineminimarketbackend.repository.OrderRepository;
 import com.example.waaonlineminimarketbackend.repository.ProductRepository;
 import com.example.waaonlineminimarketbackend.service.ProductService;
 import org.modelmapper.ModelMapper;
@@ -17,13 +19,20 @@ public class ProductServiceImpl implements ProductService {
     ProductRepository productRepository;
 
     @Autowired
+    OrderRepository orderRepository;
+
+    @Autowired
     ModelMapper modelMapper;
 
     @Override
-    public void saveItem(ProductInputDto productD) {
+    public ProductOutputDto saveItem(ProductInputDto productD) {
         Product newProduct = new Product();
         modelMapper.map(productD, newProduct);
         productRepository.save(newProduct);
+
+        ProductOutputDto prod = new ProductOutputDto();
+        modelMapper.map(newProduct, prod);
+        return prod;
     }
 
     @Override
@@ -37,19 +46,25 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteItemById(long id) {
-//        var product = productRepository.getById(id);
-////        if (product.isAvailable()) {
-//            productRepository.deleteById(id);
-////        } // TODO
+    public void deleteItemById(long id) throws Exception {
+        var product = productRepository.getById(id);
+        var orderForProductExists = orderRepository.findByProductId(id).stream().findAny().isPresent();
+        if (!orderForProductExists) {
+            productRepository.deleteById(id);
+        } else {
+            throw new Exception("Product can not be deleted");
+        }
     }
 
 
     @Override
-    public void UpdateItemById(long id, Product incomingProduct) {
+    public ProductOutputDto UpdateItemById(long id, ProductInputDto incomingProduct) {
         var storedProduct = productRepository.getById(id);
         modelMapper.map(incomingProduct, storedProduct);
         productRepository.save(storedProduct);
+        ProductOutputDto updated = new ProductOutputDto();
+        modelMapper.map(storedProduct, updated);
+        return updated;
     }
 
 }

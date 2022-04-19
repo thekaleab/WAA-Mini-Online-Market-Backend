@@ -26,6 +26,7 @@ public class Product {
 //    @Column(nullable = false)
 //    @NotNull
 
+    @Column(columnDefinition="TEXT")
     private String description;
 
     private String tag;
@@ -36,7 +37,7 @@ public class Product {
 
     @ManyToMany
     @JsonIgnore
-    private List<User> users;
+    private List<User> user;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name="product_id")
