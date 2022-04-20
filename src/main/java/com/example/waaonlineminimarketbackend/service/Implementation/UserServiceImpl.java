@@ -10,6 +10,7 @@ import com.example.waaonlineminimarketbackend.entity.dto.output.UserOutputDto;
 import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
 import com.example.waaonlineminimarketbackend.repository.UserRepository;
 import com.example.waaonlineminimarketbackend.service.UserService;
+import com.example.waaonlineminimarketbackend.util.AuthenticatedUser;
 import com.example.waaonlineminimarketbackend.util.ListMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     EmailSenderService emailSenderService;
+
+    @Autowired
+    AuthenticatedUser authenticatedUser;
 
     @Override
     public void saveUser(UserInputDto userD){
@@ -88,7 +92,15 @@ public class UserServiceImpl implements UserService {
        user.setCoupon(point);
     }
 
-//    @Override
+    @Override
+    public void followSeller(long id) {
+        var buyer = authenticatedUser.getCurrentUser();
+        var seller = userRepository.getById(id);
+        buyer.getBuyerFollowerList().add(seller);
+        userRepository.save(buyer);
+    }
+
+    //    @Override
 //    public void UpdateUserById(long id, User user) {
 //
 //
