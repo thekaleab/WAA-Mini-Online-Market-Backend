@@ -21,5 +21,6 @@ public interface UserService {
     public void UpdateUserById(long id, UserUpdateInputDto userUpdateInputDto);
     public void UpdateUserStatus(long id, UserUpdateDto userD) ;
     public void UpdateUserPoint(long id);
+    public void followSeller(long id);
 }
 
