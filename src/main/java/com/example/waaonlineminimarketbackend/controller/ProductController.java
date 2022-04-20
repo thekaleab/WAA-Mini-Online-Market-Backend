@@ -30,8 +30,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getAllItem() {
-        return productService.getAllItem();
+    public ResponseEntity<?> getAllItem() {
+        return ResponseEntity.ok(productService.getAllItem());
     }
 
     @GetMapping("/seller/{id}")

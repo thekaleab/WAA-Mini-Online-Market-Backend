@@ -1,10 +1,12 @@
 package com.example.waaonlineminimarketbackend.entity.dto.output;
 
+import com.example.waaonlineminimarketbackend.entity.Review;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,4 +19,5 @@ public class ProductOutputDto {
     private double price;
     private int quantity;
     private String imgUrl;
+    private List<Review> reviews;
 }
