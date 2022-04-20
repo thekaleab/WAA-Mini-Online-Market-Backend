@@ -13,4 +13,5 @@ public class UserOutputDto {
     private String lastName;
     private String email;
     private Role role;
+    private int Coupon =0;
 }

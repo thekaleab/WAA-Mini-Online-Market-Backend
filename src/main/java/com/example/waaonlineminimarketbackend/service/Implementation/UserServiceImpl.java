@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -63,6 +64,18 @@ public class UserServiceImpl implements UserService {
         var seller = userRepository.getById(id);
         seller.setIsSellerApproved(userD.getStatus());
         userRepository.save(seller);
+    }
+
+    @Override
+    public void UpdateUserPoint(long id) {
+        var user = userRepository.getById(id);
+        var userOrders = user.getOrders();
+
+       var deliveredOrder= ( userOrders.stream().filter(userOrder -> (userOrder.getStatus().getId()>3))).collect(Collectors.toList());
+
+       var point = deliveredOrder.size();
+
+       user.setCoupon(point);
     }
 
 //    @Override
