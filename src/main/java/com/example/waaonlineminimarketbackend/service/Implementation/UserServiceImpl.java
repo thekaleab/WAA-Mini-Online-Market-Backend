@@ -3,6 +3,8 @@ package com.example.waaonlineminimarketbackend.service.Implementation;
 import com.example.waaonlineminimarketbackend.entity.User;
 import com.example.waaonlineminimarketbackend.entity.dto.input.UserInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.input.UserUpdateDto;
+import com.example.waaonlineminimarketbackend.entity.dto.input.UserUpdateInputDto;
+import com.example.waaonlineminimarketbackend.entity.dto.output.ProductOutputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.UserOutputDto;
 import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
 import com.example.waaonlineminimarketbackend.repository.UserRepository;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -32,7 +35,7 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public void saveUser(UserInputDto userD) throws BadRequestException {
+    public void saveUser(UserInputDto userD){
         User newUser = new User();
         modelMapper.map(userD, newUser);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
@@ -65,11 +68,31 @@ public class UserServiceImpl implements UserService {
         userRepository.save(seller);
     }
 
+    @Override
+    public void UpdateUserPoint(long id) {
+        var user = userRepository.getById(id);
+        var userOrders = user.getOrders();
+
+       var deliveredOrder= ( userOrders.stream().filter(userOrder -> (userOrder.getStatus().getId()>3))).collect(Collectors.toList());
+
+       var point = deliveredOrder.size();
+
+       user.setCoupon(point);
+    }
+
 //    @Override
 //    public void UpdateUserById(long id, User user) {
 //
 //
 //        }
+    @Override
+    public void UpdateUserById(long id, UserUpdateInputDto userUpdateInputDto) {
+        var user1 = userRepository.getById(id);
+        modelMapper.map(userUpdateInputDto, user1);
+        userRepository.save(user1);
+
+        }
+
 
 
 

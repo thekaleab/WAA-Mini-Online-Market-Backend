@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,9 +20,9 @@ public class Address {
     private String state;
     private String zipCode;
 
-    @OneToOne
+    @OneToMany
     @JoinColumn(name="type_id")
-    private AddressType addressType;
+    private List<AddressType> addressType;
 
 
 
