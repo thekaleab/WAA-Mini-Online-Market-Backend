@@ -2,6 +2,7 @@ package com.example.waaonlineminimarketbackend.controller;
 
 import com.example.waaonlineminimarketbackend.entity.User;
 import com.example.waaonlineminimarketbackend.entity.dto.input.UserInputDto;
+import com.example.waaonlineminimarketbackend.entity.dto.input.UserUpdateInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.UserOutputDto;
 import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
 import com.example.waaonlineminimarketbackend.service.UserService;
@@ -21,12 +22,7 @@ public class UserController {
 
     @PostMapping
     public void addUser(@RequestBody UserInputDto userD){
-        try {
-            userService.saveUser(userD);
-        } catch(BadRequestException e) {
-            System.out.println(e.getMessage());
-        }
-
+        userService.saveUser(userD);
     }
 
     @GetMapping
@@ -39,7 +35,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public void updateUserById(@PathVariable long id, User user){
+    public void updateUserById(@PathVariable long id, @RequestBody UserUpdateInputDto userUpdateInputDto){
+        userService.UpdateUserById(id, userUpdateInputDto);
 
 
     }
