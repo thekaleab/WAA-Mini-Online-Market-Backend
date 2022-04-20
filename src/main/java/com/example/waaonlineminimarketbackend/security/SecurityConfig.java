@@ -78,7 +78,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/v1/orders/status",
                         "/swagger-ui/**",
                         "/static/**",
-                        "/api/v1/invoice"
+                        "/api/v1/invoice",
+                        "/api/v1/reviews"
                 ).permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/orders").hasAuthority("BUYER")
                 .antMatchers(HttpMethod.PUT, "/api/v1/orders/status/**").hasAuthority("SELLER")
