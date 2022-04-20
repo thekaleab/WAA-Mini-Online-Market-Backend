@@ -6,6 +6,7 @@ import com.example.waaonlineminimarketbackend.entity.dto.input.OrderInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.input.OrderStatusInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.OrderOutputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.OrderOutputDto;
+import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
 import com.example.waaonlineminimarketbackend.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -50,8 +51,18 @@ public class OrderController {
     }
 
     @PutMapping("/status/{id}")
-    public void updateStatus(@PathVariable long id, @RequestBody OrderStatusInputDto statusDto){
-        orderService.updateStatus(id, statusDto);
+    public ResponseEntity<?> updateStatus(@PathVariable long id, @RequestBody OrderStatusInputDto statusDto){
+        try {
+            orderService.updateStatus(id, statusDto);
+            return ResponseEntity.ok("success");
+        } catch (BadRequestException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<?> getAllOrderStatus() {
+        return ResponseEntity.ok(orderService.getAllOrderStatus());
     }
 
     @DeleteMapping("/{id}")

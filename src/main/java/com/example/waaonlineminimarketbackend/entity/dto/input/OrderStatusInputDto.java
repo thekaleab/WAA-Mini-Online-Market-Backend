@@ -9,6 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderStatusInputDto {
-//    private long id;
-    private OrderStatus status;
+    private long id;
 }

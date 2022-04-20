@@ -14,6 +14,9 @@ public class StaticResourceContrller {
     @GetMapping(value="/images/{imgUrl}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable String imgUrl) throws IOException {
 
+        if(imgUrl == null || imgUrl.equals("null")) {
+            return ResponseEntity.badRequest().body(null);
+        }
         var imgFile = new ClassPathResource("static/"+imgUrl);
         byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
 

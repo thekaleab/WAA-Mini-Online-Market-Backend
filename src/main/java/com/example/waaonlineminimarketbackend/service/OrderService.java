@@ -5,6 +5,7 @@ import com.example.waaonlineminimarketbackend.entity.OrderStatus;
 import com.example.waaonlineminimarketbackend.entity.dto.input.OrderInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.input.OrderStatusInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.OrderOutputDto;
+import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
 
 import java.util.List;
 
@@ -16,5 +17,6 @@ public interface OrderService {
      Order getOrderById(long id);
      void deleteOrderById(long id);
      void UpdateOrderById(long id, OrderStatus orderD);
-     void updateStatus(long id, OrderStatusInputDto orderStatusDto);
+     void updateStatus(long id, OrderStatusInputDto statusInputDto) throws BadRequestException;
+     List<OrderStatus> getAllOrderStatus();
 }

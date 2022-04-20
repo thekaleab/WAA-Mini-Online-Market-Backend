@@ -114,13 +114,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateStatus(long id, OrderStatusInputDto orderStatusDto) {
+    public void updateStatus(long id, OrderStatusInputDto orderStatusDto) throws BadRequestException{
         var order = orderRepository.getById(id);
-        long currentStatusId = order.getStatus().getId();
-        if(orderStatusDto.getStatus().getId() == 5 && currentStatusId > 2) {
-            return;  // Shipped item can't be cancelled.
+        if(order.getStatus().getId() == 5 && orderStatusDto.getId() > 2) {
+            throw new BadRequestException("Order is cancelled and can not longer be updated");
         }
-        order.setStatus(orderStatusDto.getStatus());
+        var orderStatus = orderStatusRepository.getById(orderStatusDto.getId());
+        order.setStatus(orderStatus);
         orderRepository.save(order);
+    }
+
+    @Override
+    public List<OrderStatus> getAllOrderStatus() {
+        return orderStatusRepository.findAll();
     }
 }
