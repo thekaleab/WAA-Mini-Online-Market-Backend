@@ -104,18 +104,14 @@ public class UserServiceImpl implements UserService {
         userRepository.save(buyer);
     }
 
-    //    @Override
-//    public void UpdateUserById(long id, User user) {
-//
-//
-//        }
     @Override
     public void UpdateUserById(long id, UserUpdateInputDto userUpdateInputDto) {
-        var user1 = userRepository.getById(id);
-        modelMapper.map(userUpdateInputDto, user1);
-        userRepository.save(user1);
+        var user = userRepository.getById(id);
+        user.setFirstName(userUpdateInputDto.getFirstName());
+        user.setLastName(userUpdateInputDto.getLastName());
+        userRepository.save(user);
 
-        }
+    }
 
 
 

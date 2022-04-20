@@ -35,13 +35,13 @@ public class User {
 
     private Boolean isSellerApproved = false;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="buyer_id")
     List<Order> orders;
 
-    @OneToMany(mappedBy = "seller")
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Product> products;
 
-    @ManyToMany()
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Set<User> buyerFollowerList = new HashSet<>();
 }
