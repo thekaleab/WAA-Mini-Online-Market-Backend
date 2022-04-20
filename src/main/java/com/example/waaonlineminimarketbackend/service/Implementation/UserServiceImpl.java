@@ -3,6 +3,8 @@ package com.example.waaonlineminimarketbackend.service.Implementation;
 import com.example.waaonlineminimarketbackend.entity.User;
 import com.example.waaonlineminimarketbackend.entity.dto.input.UserInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.input.UserUpdateDto;
+import com.example.waaonlineminimarketbackend.entity.dto.input.UserUpdateInputDto;
+import com.example.waaonlineminimarketbackend.entity.dto.output.ProductOutputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.UserOutputDto;
 import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
 import com.example.waaonlineminimarketbackend.repository.UserRepository;
@@ -33,7 +35,7 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public void saveUser(UserInputDto userD) throws BadRequestException {
+    public void saveUser(UserInputDto userD){
         User newUser = new User();
         modelMapper.map(userD, newUser);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
@@ -83,6 +85,14 @@ public class UserServiceImpl implements UserService {
 //
 //
 //        }
+    @Override
+    public void UpdateUserById(long id, UserUpdateInputDto userUpdateInputDto) {
+        var user1 = userRepository.getById(id);
+        modelMapper.map(userUpdateInputDto, user1);
+        userRepository.save(user1);
+
+        }
+
 
 
 
