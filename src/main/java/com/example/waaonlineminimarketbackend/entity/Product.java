@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -18,13 +19,10 @@ public class Product {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     @NotNull
-
     private String name;
-
-//    @Column(nullable = false)
-//    @NotNull
 
     @Column(columnDefinition="TEXT")
     private String description;
@@ -32,8 +30,11 @@ public class Product {
     private String category;
 
 //    @NotNull
+
     private double price;
+
     private int quantity;
+
     private String imgUrl;
 
     @ManyToOne

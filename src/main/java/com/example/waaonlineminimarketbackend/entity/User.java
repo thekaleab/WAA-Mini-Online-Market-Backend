@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,12 +21,24 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    @NotBlank
     private String firstName;
+
+    @Column(nullable = false)
+    @NotBlank
     private String lastName;
+
     private int Coupon =0;
 
-    @Column(unique = true)
+
+    @Email
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
+    @Size(min=4)
     private String password;
 
     @OneToMany
