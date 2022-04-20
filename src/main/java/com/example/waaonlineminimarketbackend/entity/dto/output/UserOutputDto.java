@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserOutputDto {
+    private String id;
     private String firstName;
     private String lastName;
     private String email;
     private Role role;
+    private Boolean isSellerApproved;
 }
