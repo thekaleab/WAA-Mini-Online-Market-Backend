@@ -70,7 +70,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteItemById(long id) throws Exception {
-        var product = productRepository.getById(id);
+        var product = productRepository.findById(id).orElse(null);
+        System.out.println(product);
         var orderForProductExists = orderItemRepository.findByProductId(id).stream().findAny().isPresent();
         if (!orderForProductExists) {
             productRepository.deleteById(id);
