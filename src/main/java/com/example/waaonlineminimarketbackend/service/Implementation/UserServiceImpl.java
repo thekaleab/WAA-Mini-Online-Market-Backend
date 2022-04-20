@@ -8,6 +8,7 @@ import com.example.waaonlineminimarketbackend.entity.dto.input.UserUpdateInputDt
 import com.example.waaonlineminimarketbackend.entity.dto.output.ProductOutputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.UserOutputDto;
 import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
+import com.example.waaonlineminimarketbackend.repository.ProductRepository;
 import com.example.waaonlineminimarketbackend.repository.UserRepository;
 import com.example.waaonlineminimarketbackend.service.UserService;
 import com.example.waaonlineminimarketbackend.util.AuthenticatedUser;
@@ -41,6 +42,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     AuthenticatedUser authenticatedUser;
+
+    @Autowired
+    ProductRepository productRepository;
 
     @Override
     public void saveUser(UserInputDto userD){
@@ -97,9 +101,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void followSeller(long id) {
+    public void followSeller(long productId) {
+        var product = productRepository.getById(productId);
         var buyer = authenticatedUser.getCurrentUser();
-        var seller = userRepository.getById(id);
+        var seller = product.getSeller();
         buyer.getBuyerFollowerList().add(seller);
         userRepository.save(buyer);
     }

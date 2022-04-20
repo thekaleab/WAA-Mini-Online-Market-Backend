@@ -45,7 +45,7 @@ public class UserController {
         System.out.println(id);
         userService.deleteUserById(id);
     }
-    @GetMapping("/follow/{id}")
+    @PutMapping("/follow/{id}")
     public void followSeller(@PathVariable long id){
         userService.followSeller(id);
     }
