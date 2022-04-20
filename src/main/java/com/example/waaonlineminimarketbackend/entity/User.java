@@ -33,7 +33,7 @@ public class User {
     @OneToOne
     private Role role;
 
-    private Boolean isSellerApproved;
+    private Boolean isSellerApproved = false;
 
     @OneToMany
     @JoinColumn(name="buyer_id")

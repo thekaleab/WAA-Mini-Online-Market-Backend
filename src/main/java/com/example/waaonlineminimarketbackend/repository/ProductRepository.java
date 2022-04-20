@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query("select p from Product p where p.seller.id=:id AND p.seller.role.id = 2")
+    // seller id role is assumed to be 3;
+    @Query("select p from Product p where p.seller.id=:id AND p.seller.role.id = 3")
     List<Product> findSellerProducts(long id);
 }

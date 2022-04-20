@@ -48,9 +48,13 @@ public class UserServiceImpl implements UserService {
         modelMapper.map(userD, newUser);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);
-        emailSenderService.sendSimpleEmail(newUser.getEmail(),
-                " You have created your account successfully",
-                "create account");
+        try {
+            emailSenderService.sendSimpleEmail(newUser.getEmail(),
+                    " You have created your account successfully",
+                    "create account");
+        } catch (Exception e) {
+            // do nothing.
+        }
 
     }
 
