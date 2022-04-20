@@ -1,5 +1,6 @@
 package com.example.waaonlineminimarketbackend.service.Implementation;
 
+import com.example.waaonlineminimarketbackend.EmailSenderService;
 import com.example.waaonlineminimarketbackend.entity.User;
 import com.example.waaonlineminimarketbackend.entity.dto.input.UserInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.input.UserUpdateDto;
@@ -34,12 +35,19 @@ public class UserServiceImpl implements UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    EmailSenderService emailSenderService;
+
     @Override
     public void saveUser(UserInputDto userD){
         User newUser = new User();
         modelMapper.map(userD, newUser);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);
+        emailSenderService.sendSimpleEmail(newUser.getEmail(),
+                " You have created your account successfully",
+                "create account");
+
     }
 
     @Override
