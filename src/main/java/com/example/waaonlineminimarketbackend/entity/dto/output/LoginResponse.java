@@ -17,4 +17,5 @@ public class LoginResponse {
     private Role role;
     private String accessToken;
     private String refreshToken;
+    private Boolean isSellerApproved;
 }

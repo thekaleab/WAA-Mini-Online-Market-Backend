@@ -44,13 +44,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         final String refreshToken = jwtHelper.generateRefreshToken(loginRequest.getEmail());
         var user = userRepository.findByEmail(userDetails.getUsername());
         var loginResponse = new LoginResponse();
-        loginResponse.setId(user.getId());
-        loginResponse.setFirstName(user.getFirstName());
-        loginResponse.setEmail(user.getEmail());
-        loginResponse.setLastName(user.getLastName());
-        loginResponse.setRole(user.getRole());
-        loginResponse.setAccessToken(accessToken);
-        loginResponse.setRefreshToken(refreshToken);
+        modelMapper.map(user, loginResponse);
         return loginResponse;
     }
 

@@ -33,6 +33,7 @@ public class User {
     @OneToOne
     private Role role;
 
+    @Column(nullable = false)
     private Boolean isSellerApproved = false;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
