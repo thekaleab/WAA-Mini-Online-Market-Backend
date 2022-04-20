@@ -1,5 +1,6 @@
 package com.example.waaonlineminimarketbackend.service.Implementation;
 
+import com.example.waaonlineminimarketbackend.EmailSenderService;
 import com.example.waaonlineminimarketbackend.entity.Order;
 import com.example.waaonlineminimarketbackend.entity.OrderItem;
 import com.example.waaonlineminimarketbackend.entity.dto.input.OrderInputDto;
@@ -47,6 +48,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     OrderItemRepository orderItemRepository;
 
+    @Autowired
+    EmailSenderService emailSenderService;
+
     @Override
     public void saveOrder(OrderInputDto orderD) throws BadRequestException {
         var buyer = authenticatedUser.getCurrentUser();
@@ -89,6 +93,14 @@ public class OrderServiceImpl implements OrderService {
             var product = productRepository.getById(oItem.getProduct().getId());
             product.setQuantity(product.getQuantity() - oItem.getQuantity());
             productRepository.save(product);
+        }
+
+        try {
+            emailSenderService.sendSimpleEmail(authenticatedUser.getCurrentUser().getEmail(),
+                    " you purchased successfully ",
+                    "Purchase");
+        } catch (Exception e) {
+            // do nothing.
         }
 
     }
