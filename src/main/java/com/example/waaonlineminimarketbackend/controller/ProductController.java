@@ -52,6 +52,7 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteItemById(@PathVariable long id){
+        System.out.println(id);
         try {
             productService.deleteItemById(id);
             return ResponseEntity.accepted().body("Resource deleted");
