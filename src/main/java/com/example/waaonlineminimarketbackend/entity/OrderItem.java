@@ -19,9 +19,16 @@ public class OrderItem {
     private Long id;
     private int quantity;
 
+    private LocalDateTime orderTime;
+    private LocalDateTime updatedTime;
+
+
+    @OneToOne
+    @JoinColumn(name="status_id")
+    private OrderStatus status;
+
     @OneToOne
     @JoinColumn(name = "product_id")
     @JsonIgnore
     private Product product;
-
 }
