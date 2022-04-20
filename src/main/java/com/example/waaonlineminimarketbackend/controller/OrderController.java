@@ -3,7 +3,9 @@ package com.example.waaonlineminimarketbackend.controller;
 import com.example.waaonlineminimarketbackend.entity.Order;
 import com.example.waaonlineminimarketbackend.entity.OrderStatus;
 import com.example.waaonlineminimarketbackend.entity.dto.input.OrderInputDto;
+import com.example.waaonlineminimarketbackend.entity.dto.input.OrderItemStatusInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.input.OrderStatusInputDto;
+import com.example.waaonlineminimarketbackend.entity.dto.output.OrderItemOutputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.OrderOutputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.OrderOutputDto;
 import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
@@ -35,6 +37,11 @@ public class OrderController {
         return orderService.getAllOrder();
     }
 
+    @GetMapping("/seller/items/{id}")
+    public List<OrderItemOutputDto> getAllOrderItemsBySeller(@PathVariable long id) {
+        return orderService.getAllOrderItemsBySeller(id);
+    }
+
     @GetMapping("/{id}")
     public Order getOrderById(@PathVariable long id){
         return orderService.getOrderById(id);
@@ -43,6 +50,11 @@ public class OrderController {
     @GetMapping("/buyer/{id}")
     public List<OrderOutputDto> getByBuyer(@PathVariable long id){
         return orderService.getByBuyer(id);
+    }
+
+    @GetMapping("/seller/{id}")
+    public List<OrderOutputDto> getBySeller(@PathVariable long id) {
+        return orderService.getAllOrdersBySeller(id);
     }
 
     @PutMapping("/{id}")
@@ -54,6 +66,17 @@ public class OrderController {
     public ResponseEntity<?> updateStatus(@PathVariable long id, @RequestBody OrderStatusInputDto statusDto){
         try {
             orderService.updateStatus(id, statusDto);
+            return ResponseEntity.ok("success");
+        } catch (BadRequestException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
+    @PutMapping("/item/status/{id}")
+    public ResponseEntity<?> updateOrderItemStatus(@PathVariable long id, @RequestBody OrderItemStatusInputDto orderItemStatusInputDto){
+        try {
+            orderService.updateOrderItemStatus(id, orderItemStatusInputDto);
             return ResponseEntity.ok("success");
         } catch (BadRequestException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
