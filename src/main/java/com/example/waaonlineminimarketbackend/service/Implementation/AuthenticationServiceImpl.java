@@ -45,6 +45,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var user = userRepository.findByEmail(userDetails.getUsername());
         var loginResponse = new LoginResponse();
         modelMapper.map(user, loginResponse);
+        loginResponse.setRefreshToken(refreshToken);
+        loginResponse.setAccessToken(accessToken);
         return loginResponse;
     }
 
