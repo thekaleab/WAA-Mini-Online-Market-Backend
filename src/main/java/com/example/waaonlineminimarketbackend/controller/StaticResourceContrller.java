@@ -8,7 +8,7 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/static")
+@RequestMapping("/api/v1/static")
 public class StaticResourceContrller {
 
     @GetMapping(value="/images/{imgUrl}", produces = MediaType.IMAGE_JPEG_VALUE)

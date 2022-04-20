@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -70,10 +71,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-//            .antMatchers("/api/v1/roles/**", "/api/v1/auth/**").permitAll()
-            .antMatchers("/users").hasAuthority("ADMIN")
-            .antMatchers("/**").permitAll()
-            .anyRequest().authenticated();
+                .antMatchers(
+                        "/api/v1/roles/**",
+                        "/api/v1/authenticate/**",
+                        "/api/v1/address/**",
+                        "/api/v1/orders/status",
+                        "/swagger-ui/**",
+                        "/static/**",
+                        "/api/v1/invoice"
+                ).permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/orders").hasAuthority("BUYER")
+                .antMatchers(HttpMethod.PUT, "/api/v1/orders/status/**").hasAuthority("SELLER")
+                .antMatchers(HttpMethod.PUT, "/api/v1/orders/status/**").hasAuthority("SELLER")
+                .antMatchers(HttpMethod.POST, "/api/v1/product").hasAuthority("SELLER")
+                .antMatchers(HttpMethod.PUT, "/api/v1/product").hasAuthority("SELLER")
+                .antMatchers(HttpMethod.DELETE, "/api/v1/product").hasAuthority("SELLER")
+                .antMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET,  "/api/v1/users").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE,  "/api/v1/users").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE,  "/api/v1/users").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST,  "/api/v1/users/follow/**").hasAuthority("BUYER")
+                .antMatchers(HttpMethod.POST,  "/api/v1/reviews").hasAuthority("BUYER")
+                .antMatchers(HttpMethod.PUT,  "/api/v1/reviews").hasAuthority("BUYER")
+                .antMatchers(HttpMethod.DELETE,  "/api/v1/reviews").hasAuthority("BUYER")
+                .antMatchers(HttpMethod.POST,  "/api/v1/upload").hasAuthority("SELLER")
+                .antMatchers("/**").permitAll()
+                .anyRequest().authenticated();
 
         http.addFilterBefore(
                 jwtFilter,
