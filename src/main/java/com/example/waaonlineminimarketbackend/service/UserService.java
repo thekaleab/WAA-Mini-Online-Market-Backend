@@ -18,5 +18,6 @@ public interface UserService {
     public void deleteUserById(long id);
 //    public void UpdateUserById(long id, User user);
     public void UpdateUserStatus(long id, UserUpdateDto userD);
+    public void UpdateUserPoint(long id);
 }
 

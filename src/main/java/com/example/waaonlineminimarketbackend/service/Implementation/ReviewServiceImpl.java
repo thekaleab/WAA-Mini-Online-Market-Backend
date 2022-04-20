@@ -24,10 +24,11 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review saveReview(Review review)  throws BadRequestException {
-        if(review.isApproved()==true){
-         return  reviewRepository.save(review);
-        }else {
-            throw new BadRequestException("Review is not approved");
+       try {
+           review.setApproved(false);
+           return reviewRepository.save(review);
+       }catch (Exception e){
+            throw new BadRequestException();
         }
     }
 

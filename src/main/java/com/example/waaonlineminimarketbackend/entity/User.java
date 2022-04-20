@@ -18,6 +18,8 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
+    private int Coupon =0;
+
 
     @Column(unique = true)
     private String email;

@@ -41,5 +41,6 @@ public class AddressServiceImpl  implements AddressService {
        address.setId(add.getId());
        address.setZipCode(add.getZipCode());
        address.setCity(add.getCity());
+       address.setAddressType(add.getAddressType());
     }
 }
