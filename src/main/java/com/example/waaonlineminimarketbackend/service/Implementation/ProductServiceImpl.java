@@ -2,9 +2,10 @@ package com.example.waaonlineminimarketbackend.service.Implementation;
 
 import com.example.waaonlineminimarketbackend.entity.Product;
 import com.example.waaonlineminimarketbackend.entity.Review;
+import com.example.waaonlineminimarketbackend.entity.User;
 import com.example.waaonlineminimarketbackend.entity.dto.input.ProductInputDto;
-import com.example.waaonlineminimarketbackend.entity.dto.output.OrderItemOutputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.ProductOutputDto;
+import com.example.waaonlineminimarketbackend.entity.dto.output.UserOutputDto;
 import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
 import com.example.waaonlineminimarketbackend.repository.OrderItemRepository;
 import com.example.waaonlineminimarketbackend.repository.OrderRepository;
@@ -100,4 +101,14 @@ public class ProductServiceImpl implements ProductService {
         return reviewRepository.findAllByProductId(id);
     }
 
+    @Override
+    public UserOutputDto findProductSeller(long id)  {
+        var user = productRepository.findProductSeller(id);
+        if(user == null) {
+            return null;
+        }
+        var userDto = new UserOutputDto();
+        modelMapper.map(user, userDto);
+        return userDto;
+    }
 }

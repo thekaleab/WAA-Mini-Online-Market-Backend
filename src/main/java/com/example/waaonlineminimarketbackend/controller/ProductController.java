@@ -5,6 +5,7 @@ import com.example.waaonlineminimarketbackend.entity.Review;
 import com.example.waaonlineminimarketbackend.entity.dto.input.ProductInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.ProductOutputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.ResponseBodyDto;
+import com.example.waaonlineminimarketbackend.entity.dto.output.UserOutputDto;
 import com.example.waaonlineminimarketbackend.service.ProductService;
 import com.example.waaonlineminimarketbackend.util.AuthenticatedUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +67,10 @@ public class ProductController {
     @GetMapping("/reviews/{id}")
     public List<Review> findProductReview(@PathVariable long id) {
         return productService.findAllByProductId(id);
+    }
+
+    @GetMapping("/product-seller/{id}")
+    public UserOutputDto findProductSeller(@PathVariable long id) {
+        return productService.findProductSeller(id);
     }
 }
