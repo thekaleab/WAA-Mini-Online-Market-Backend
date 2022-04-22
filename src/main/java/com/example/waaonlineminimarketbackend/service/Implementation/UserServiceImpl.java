@@ -47,7 +47,12 @@ public class UserServiceImpl implements UserService {
     ProductRepository productRepository;
 
     @Override
-    public void saveUser(UserInputDto userD){
+    public void saveUser(UserInputDto userD) throws BadRequestException {
+        // do not allow admin registration from api.
+        if(userD.getRole().getId() == 1) {
+            throw new BadRequestException("You can't register as an Administrator");
+        }
+
         User newUser = new User();
         modelMapper.map(userD, newUser);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));

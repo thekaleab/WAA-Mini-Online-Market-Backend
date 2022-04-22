@@ -14,7 +14,7 @@ import java.util.List;
 public interface UserService {
 
 
-    public void saveUser(UserInputDto userD) ;
+    public void saveUser(UserInputDto userD) throws BadRequestException;
     public List<UserOutputDto> getAllUser() ;
     public UserOutputDto getUserById(long id) ;
     public void deleteUserById(long id) ;

@@ -21,8 +21,13 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public void addUser(@RequestBody UserInputDto userD){
-        userService.saveUser(userD);
+    public ResponseEntity<?> addUser(@RequestBody UserInputDto userD){
+        try {
+            userService.saveUser(userD);
+            return ResponseEntity.ok("User successfully created");
+        } catch (BadRequestException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping

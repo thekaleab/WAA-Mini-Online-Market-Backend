@@ -9,6 +9,7 @@ import com.example.waaonlineminimarketbackend.entity.dto.output.OrderItemOutputD
 import com.example.waaonlineminimarketbackend.entity.dto.output.OrderOutputDto;
 import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 public interface OrderService {
@@ -27,4 +28,6 @@ public interface OrderService {
 
     // OrderItem related, added here because orderItem and Order are closely coupled
     List<OrderItemOutputDto> getAllOrderItemsBySeller(long id);
+
+    ByteArrayInputStream generateOrderInvoice(long id);
 }

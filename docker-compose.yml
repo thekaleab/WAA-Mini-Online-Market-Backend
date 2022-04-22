@@ -4,6 +4,7 @@ services:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     environment:
+      MYSQL_DATABASE: waafinalproject
       MYSQL_ROOT_PASSWORD: testd
     ports:
       - "3306:3306"

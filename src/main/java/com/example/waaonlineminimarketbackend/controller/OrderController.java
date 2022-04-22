@@ -10,10 +10,21 @@ import com.example.waaonlineminimarketbackend.entity.dto.output.OrderOutputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.OrderOutputDto;
 import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
 import com.example.waaonlineminimarketbackend.service.OrderService;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -91,6 +102,23 @@ public class OrderController {
     @DeleteMapping("/{id}")
     public void deleteOrderById(@PathVariable long id){
         orderService.deleteOrderById(id);
+    }
 
+
+    @GetMapping("/invoice/{id}")
+    public ResponseEntity<?> generateInvoice(@PathVariable long id)  {
+
+        ByteArrayInputStream invoice = orderService.generateOrderInvoice(id);
+        if(invoice == null) {
+            return ResponseEntity.notFound().build();
+        }
+        var headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=order_invoice.pdf");
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(invoice));
     }
 }

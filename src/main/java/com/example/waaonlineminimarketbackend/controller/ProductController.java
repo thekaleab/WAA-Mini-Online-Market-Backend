@@ -1,6 +1,7 @@
 package com.example.waaonlineminimarketbackend.controller;
 
 import com.example.waaonlineminimarketbackend.entity.Product;
+import com.example.waaonlineminimarketbackend.entity.Review;
 import com.example.waaonlineminimarketbackend.entity.dto.input.ProductInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.ProductOutputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.ResponseBodyDto;
@@ -60,5 +61,10 @@ public class ProductController {
             return ResponseEntity.badRequest().body("Product can not be deleted");
         }
 
+    }
+
+    @GetMapping("/reviews/{id}")
+    public List<Review> findProductReview(@PathVariable long id) {
+        return productService.findAllByProductId(id);
     }
 }

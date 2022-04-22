@@ -21,9 +21,12 @@ import com.example.waaonlineminimarketbackend.util.ListMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -55,14 +58,15 @@ public class OrderServiceImpl implements OrderService {
     public void saveOrder(OrderInputDto orderD) throws BadRequestException {
         var buyer = authenticatedUser.getCurrentUser();
 
-        if(buyer == null) {
-            throw new BadRequestException("Cannot create a product without seller");
+        if (buyer == null) {
+            throw new BadRequestException("Cannot create a product without an authenticated buyer");
         }
         boolean errorOccured = false;
         double total = 0;
         var orderStatus = orderStatusRepository.getById(2L); // id=2 should be RECEIVED
         List<OrderItem> orderItems = new ArrayList<>();
-        for(OrderItemInputDto orderItem: orderD.getOrder()) {
+        LocalDateTime now = LocalDateTime.now();
+        for (OrderItemInputDto orderItem : orderD.getOrder()) {
             var product = productRepository.getById(orderItem.getProductId());
             if (product.getQuantity() < 0 || product.getQuantity() < orderItem.getQuantity()) {
                 errorOccured = true;
@@ -71,16 +75,17 @@ public class OrderServiceImpl implements OrderService {
                 OrderItem newOrderItem = new OrderItem();
                 newOrderItem.setQuantity(orderItem.getQuantity());
                 newOrderItem.setProduct(product);
+                newOrderItem.setOrderTime(now);
+                newOrderItem.setUpdatedTime(now);
                 orderItems.add(newOrderItem);
                 newOrderItem.setStatus(orderStatus);
                 total += (product.getPrice() * orderItem.getQuantity());
             }
         }
-        if(errorOccured) {
+        if (errorOccured) {
             throw new BadRequestException("Product no longer available");
         }
         Order newOrder = new Order();
-        LocalDateTime now = LocalDateTime.now();
         newOrder.setStatus(orderStatus);
         newOrder.setOrderItems(orderItems);
         newOrder.setOrderTime(now);
@@ -89,7 +94,7 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setBuyer(buyer);
         orderRepository.save(newOrder);
 
-        for(OrderItem oItem: orderItems) {
+        for (OrderItem oItem : orderItems) {
             var product = productRepository.getById(oItem.getProduct().getId());
             product.setQuantity(product.getQuantity() - oItem.getQuantity());
             productRepository.save(product);
@@ -118,7 +123,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public  Order getOrderById(long id) {
+    public Order getOrderById(long id) {
         return orderRepository.getById(id);
     }
 
@@ -136,9 +141,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateStatus(long id, OrderStatusInputDto orderStatusDto) throws BadRequestException{
+    public void updateStatus(long id, OrderStatusInputDto orderStatusDto) throws BadRequestException {
         var order = orderRepository.getById(id);
-        if(order.getStatus().getId() == 5 && orderStatusDto.getId() > 2) {
+        if (order.getStatus().getId() == 5 && orderStatusDto.getId() > 2) {
             throw new BadRequestException("Order is cancelled and can not longer be updated");
         }
         var orderStatus = orderStatusRepository.getById(orderStatusDto.getId());
@@ -152,7 +157,7 @@ public class OrderServiceImpl implements OrderService {
         var orderItems = order.getOrderItems();
         var storeOrderItem = orderItems.stream().filter(oT -> oT.getId() == orderItemId)
                 .findFirst().orElseThrow(BadRequestException::new);
-        if(storeOrderItem.getStatus().getId() == 5 && orderStatusDto.getStatusId() > 2) {
+        if (storeOrderItem.getStatus().getId() == 5 && orderStatusDto.getStatusId() > 2) {
             throw new BadRequestException("Order is cancelled and can not longer be updated");
         }
         var desiredOrderStatus = orderStatusRepository.getById(orderStatusDto.getStatusId());
@@ -168,6 +173,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderOutputDto> getAllOrdersBySeller(long id) {
         var orders = orderRepository.findBySellerId(id);
+        // filter out orderItems that are sold only by the current seller from this order
+
+        orders.stream().forEach(order -> {
+            var orderItemsFromSeller = order.getOrderItems().stream()
+                    .filter(orderItem -> {
+                        return orderItem.getProduct().getSeller().getId() == id;
+                    }).collect(Collectors.toList());
+            order.setOrderItems(orderItemsFromSeller);
+        });
         return (List<OrderOutputDto>) listModelMapper.mapList(orders, new OrderOutputDto());
     }
 
@@ -178,4 +192,17 @@ public class OrderServiceImpl implements OrderService {
         return (List<OrderItemOutputDto>) listModelMapper2.mapList(orderItems, new OrderItemOutputDto());
     }
 
+    @Override
+    public ByteArrayInputStream generateOrderInvoice(long id) {
+
+
+        Order order = getOrderById(id);
+        InvoiceGeneratorService exporter = new InvoiceGeneratorService(order);
+        try {
+            return exporter.export();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

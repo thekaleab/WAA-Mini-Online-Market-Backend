@@ -1,6 +1,7 @@
 package com.example.waaonlineminimarketbackend.service.Implementation;
 
 import com.example.waaonlineminimarketbackend.entity.Product;
+import com.example.waaonlineminimarketbackend.entity.Review;
 import com.example.waaonlineminimarketbackend.entity.dto.input.ProductInputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.OrderItemOutputDto;
 import com.example.waaonlineminimarketbackend.entity.dto.output.ProductOutputDto;
@@ -8,6 +9,7 @@ import com.example.waaonlineminimarketbackend.exceptions.BadRequestException;
 import com.example.waaonlineminimarketbackend.repository.OrderItemRepository;
 import com.example.waaonlineminimarketbackend.repository.OrderRepository;
 import com.example.waaonlineminimarketbackend.repository.ProductRepository;
+import com.example.waaonlineminimarketbackend.repository.ReviewRepository;
 import com.example.waaonlineminimarketbackend.service.ProductService;
 import com.example.waaonlineminimarketbackend.util.AuthenticatedUser;
 import org.modelmapper.ModelMapper;
@@ -33,6 +35,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     AuthenticatedUser authenticatedUser;
+
+    @Autowired
+    ReviewRepository reviewRepository;
 
     @Override
     public ProductOutputDto saveItem(ProductInputDto productD) throws BadRequestException {
@@ -88,6 +93,11 @@ public class ProductServiceImpl implements ProductService {
         ProductOutputDto updated = new ProductOutputDto();
         modelMapper.map(storedProduct, updated);
         return updated;
+    }
+
+    @Override
+    public List<Review> findAllByProductId(long id) {
+        return reviewRepository.findAllByProductId(id);
     }
 
 }

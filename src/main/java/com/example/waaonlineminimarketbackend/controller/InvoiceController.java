@@ -19,9 +19,11 @@ import com.example.waaonlineminimarketbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.lowagie.text.DocumentException;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,26 +34,6 @@ public class InvoiceController {
     @Autowired
     OrderService orderService;
 
-    @GetMapping("/export")
-    public void  exportToPDF(HttpServletResponse response)  throws   DocumentException, IOException {
 
-        response.setContentType("application/pdf");
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-
-        String currentDateTime = dateFormatter.format(new Date());
-
-        String headerKey = "Content-Disposition";
-
-        String headerValue = "attachment; filename=users_" + currentDateTime + ".pdf";
-
-        response.setHeader(headerKey, headerValue);
-
-        List<OrderOutputDto> listOfOrder = orderService.getAllOrder();
-
-        UserPDFExporter exporter = new UserPDFExporter(listOfOrder);
-
-        exporter.export(response);
-
-    }
 
 }

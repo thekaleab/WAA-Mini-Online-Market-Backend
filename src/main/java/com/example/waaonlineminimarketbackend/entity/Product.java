@@ -41,8 +41,7 @@ public class Product {
     @JsonIgnore
     private User seller;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="product_id")
-    @JsonIgnore
     private List<Review> reviews;
 }
